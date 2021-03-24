@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import validator from "express-validator";
+import validator from "validator";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -29,3 +29,7 @@ const userSchema = new mongoose.Schema({
     default: "user",
   },
 });
+
+const User = mongoose.model("User", userSchema);
+
+export default User;

@@ -4,7 +4,11 @@ import morgan from "morgan";
 import colors from "colors";
 import connectDB from "./config/db.js";
 
+import AppError from "./utils/AppError.js";
+import errorHandler from "./middleware/errorHandler.js";
+
 import userRoutes from "./routes/userRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
@@ -19,6 +23,13 @@ if (process.env.NODE.ENV === "development") {
 }
 
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
+});
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
