@@ -84,4 +84,24 @@ const toggleLike = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createPost, getPosts, getFollowingPosts, toggleLike };
+const deletePost = catchAsync(async (req, res, next) => {
+  const user = req.user;
+  const post = await Post.findById(req.params.id);
+  if (!post) {
+    return next(new AppError("Post nt found", 404));
+  }
+
+  // console.log(user._id.toString() === post.user._id.toString());
+
+  if (user._id.toString() !== post.user._id.toString()) {
+    return next(new AppError("User not authorized to delete this post"));
+  }
+
+  await post.remove();
+
+  res.status(200).json({
+    status: "success",
+  });
+});
+
+export { createPost, getPosts, getFollowingPosts, toggleLike, deletePost };
