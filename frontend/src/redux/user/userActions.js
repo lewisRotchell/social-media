@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_FAIL,
@@ -17,7 +18,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "api/users/login",
+      "api/auth/login",
       { email, password },
       config
     );
@@ -27,7 +28,7 @@ export const login = (email, password) => async (dispatch) => {
       payload: data,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
+    localStorage.setItem("userInfo", JSON.stringify(data.token));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,

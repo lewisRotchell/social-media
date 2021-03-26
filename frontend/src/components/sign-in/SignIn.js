@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,6 +7,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/user/userActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,8 +30,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = ({ open, onOpen }) => {
+const SignIn = ({ open, onOpen, history }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password));
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -41,8 +51,9 @@ const SignIn = ({ open, onOpen }) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
+            onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
             margin="normal"
             required
@@ -54,6 +65,7 @@ const SignIn = ({ open, onOpen }) => {
             autoFocus
           />
           <TextField
+            onChange={(e) => setPassword(e.target.value)}
             variant="outlined"
             margin="normal"
             required
