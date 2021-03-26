@@ -31,8 +31,8 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  following: [],
+  followers: [],
 });
 
 userSchema.pre("save", async function (next) {

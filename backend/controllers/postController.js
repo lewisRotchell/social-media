@@ -48,4 +48,40 @@ const getFollowingPosts = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createPost, getPosts, getFollowingPosts };
+const toggleLike = catchAsync(async (req, res, next) => {
+  const user = req.user;
+  const post = await Post.findById(req.params.id);
+  console.log(post);
+  console.log(user._id);
+
+  if (!post) {
+    return next(new AppError("Post not found", 404));
+  }
+
+  //if post hasn't been liked by this user, add a like
+
+  if (
+    post.likes.filter((like) => like.user.toString() === user._id.toString())
+      .length === 0
+  ) {
+    post.likes.unshift({ user: user._id });
+    await post.save();
+  } else if (
+    post.likes.filter((like) => like.user.toString() === user._id.toString())
+      .length > 0
+  ) {
+    const removeIndex = post.likes.map((like) => {
+      like.user.toString().indexOf(user._id);
+    });
+
+    post.likes.splice(removeIndex, 1);
+    await post.save();
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: post.likes,
+  });
+});
+
+export { createPost, getPosts, getFollowingPosts, toggleLike };
