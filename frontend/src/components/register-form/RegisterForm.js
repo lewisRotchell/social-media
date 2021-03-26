@@ -3,7 +3,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
 
 const RegisterForm = React.forwardRef((props, ref) => {
   const classes = useStyles();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
+  };
   return (
     <Container
       ref={ref}
@@ -43,12 +48,12 @@ const RegisterForm = React.forwardRef((props, ref) => {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <CreateOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"

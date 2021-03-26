@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -76,16 +74,10 @@ const SignIn = ({ open, onOpen }) => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link variant="body2">Forgot password?</Link>
-            </Grid>
-            <Grid item>
-              <Button onClick={onOpen} variant="text">
-                {"Don't have an account? Sign Up"}
-              </Button>
-            </Grid>
-          </Grid>
+
+          <Button onClick={onOpen} variant="contained" fullWidth>
+            {"Create Account"}
+          </Button>
         </form>
       </div>
     </Container>
