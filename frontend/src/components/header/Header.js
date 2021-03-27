@@ -1,4 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/user/userActions";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -16,6 +19,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -23,7 +33,16 @@ const Header = () => {
           <Typography variant="h6" className={classes.title}>
             Social Media
           </Typography>
-          <Button color="inherit">Logout</Button>
+          {userInfo ? (
+            <Button onClick={handleLogout} color="inherit">
+              Logout
+            </Button>
+          ) : (
+            <Link to="/">
+              {" "}
+              <Button color="inherit">Log in</Button>{" "}
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
     </div>

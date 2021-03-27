@@ -7,7 +7,9 @@ import rootReducer from "./rootReducer";
 const middlewares = [thunk];
 
 const initialState = {
-  userLogin: { userInfo: loadUserState() },
+  userLogin: {
+    userInfo: loadUserState(),
+  },
 };
 
 const store = createStore(

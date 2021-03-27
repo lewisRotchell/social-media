@@ -31,7 +31,7 @@ export const userLoginReducer = (state = initialState, action) => {
     case USER_LOGOUT:
       return {
         loading: false,
-        userInfo: {},
+        userInfo: null,
       };
 
     default:
