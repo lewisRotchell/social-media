@@ -9,6 +9,8 @@ const middlewares = [thunk];
 const initialState = {
   userLogin: {
     token: loadUserState(),
+    loading: true,
+    userInfo: {},
   },
 };
 

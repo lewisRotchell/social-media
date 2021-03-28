@@ -19,22 +19,17 @@ const Dashboard = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
 
   const { userInfo, loading, error, isAuth } = userLogin;
+  console.log(loading);
 
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (!isAuth) {
-  //     history.push("/");
-  //   }
-  // }, [history, userInfo]);
-
   const classes = useStyles();
 
   return (
     <Container maxWidth="sm">
-      {loading || !userInfo ? (
+      {loading ? (
         <h1>Loading</h1>
       ) : error ? (
         <h1>ERROR</h1>
