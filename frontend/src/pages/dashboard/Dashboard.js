@@ -29,7 +29,7 @@ const Dashboard = ({ history }) => {
 
   return (
     <Container maxWidth="sm">
-      {loading ? (
+      {loading || userInfo === null ? (
         <h1>Loading</h1>
       ) : error ? (
         <h1>ERROR</h1>
