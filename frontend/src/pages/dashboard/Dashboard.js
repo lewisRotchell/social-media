@@ -7,6 +7,16 @@ import Grid from "@material-ui/core/Grid";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "../../redux/user/userActions";
 
+import { BeatLoader } from "react-spinners";
+import { css } from "@emotion/core";
+
+const loaderCSS = css`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 const useStyles = makeStyles((theme) => ({
   form: {
     width: "100%",
@@ -28,28 +38,30 @@ const Dashboard = ({ history }) => {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="sm">
+    <>
       {loading || userInfo === null ? (
-        <h1>Loading</h1>
+        <BeatLoader loading css={loaderCSS} />
       ) : error ? (
         <h1>ERROR</h1>
       ) : (
-        <form noValidate autoComplete="off" className={classes.form}>
-          <Grid container spacing={7} justify="center" alignItems="flex-end">
-            <Grid item xs={1}>
-              <Avatar
-                alt={userInfo.username}
-                src={userInfo.photo}
-                className={classes.avatar}
-              />
+        <Container maxWidth="sm">
+          <form noValidate autoComplete="off" className={classes.form}>
+            <Grid container spacing={7} justify="center" alignItems="flex-end">
+              <Grid item xs={1}>
+                <Avatar
+                  alt={userInfo.username}
+                  src={userInfo.photo}
+                  className={classes.avatar}
+                />
+              </Grid>
+              <Grid item xs={10}>
+                <TextField fullWidth id="standard-basic" label="Standard" />
+              </Grid>
             </Grid>
-            <Grid item xs={10}>
-              <TextField fullWidth id="standard-basic" label="Standard" />
-            </Grid>
-          </Grid>
-        </form>
+          </form>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };
 
