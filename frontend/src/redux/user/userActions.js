@@ -62,6 +62,8 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     localStorage.setItem("token", JSON.stringify(data.token));
+
+    dispatch(loadUser());
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,

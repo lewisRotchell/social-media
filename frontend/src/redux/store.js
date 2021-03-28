@@ -10,7 +10,7 @@ const initialState = {
   userLogin: {
     token: loadUserState(),
     loading: true,
-    userInfo: {},
+    userInfo: null,
   },
 };
 

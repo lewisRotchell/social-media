@@ -9,7 +9,7 @@ import {
 } from "./userTypes";
 
 const initialState = {
-  userInfo: {},
+  userInfo: null,
   loading: true,
   error: null,
   token: null,

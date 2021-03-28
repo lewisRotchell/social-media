@@ -24,22 +24,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = ({ history }) => {
+const Dashboard = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
 
-  const { userInfo, loading, error, isAuth } = userLogin;
+  const { userInfo, loading, error } = userLogin;
   console.log(loading);
 
-  useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(loadUser());
+  // }, [dispatch]);
 
   const classes = useStyles();
 
   return (
     <>
-      {loading || userInfo === null ? (
+      {loading ? (
         <BeatLoader loading css={loaderCSS} />
       ) : error ? (
         <h1>ERROR</h1>
