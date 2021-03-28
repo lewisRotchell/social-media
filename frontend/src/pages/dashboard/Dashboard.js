@@ -1,20 +1,60 @@
 import React, { useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
-import { useSelector } from "react-redux";
+import Container from "@material-ui/core/Container";
+import Avatar from "@material-ui/core/Avatar";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser } from "../../redux/user/userActions";
+
+const useStyles = makeStyles((theme) => ({
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+  },
+}));
 
 const Dashboard = ({ history }) => {
+  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+
+  const { userInfo, loading, error, isAuth } = userLogin;
+
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/");
-    }
-  }, [history, userInfo]);
+    dispatch(loadUser());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   if (!isAuth) {
+  //     history.push("/");
+  //   }
+  // }, [history, userInfo]);
+
+  const classes = useStyles();
 
   return (
-    <form noValidate autoComplete="off">
-      <TextField id="standard-basic" label="Standard" />
-    </form>
+    <Container maxWidth="sm">
+      {loading || !userInfo ? (
+        <h1>Loading</h1>
+      ) : error ? (
+        <h1>ERROR</h1>
+      ) : (
+        <form noValidate autoComplete="off" className={classes.form}>
+          <Grid container spacing={7} justify="center" alignItems="flex-end">
+            <Grid item xs={1}>
+              <Avatar
+                alt={userInfo.username}
+                src={userInfo.photo}
+                className={classes.avatar}
+              />
+            </Grid>
+            <Grid item xs={10}>
+              <TextField fullWidth id="standard-basic" label="Standard" />
+            </Grid>
+          </Grid>
+        </form>
+      )}
+    </Container>
   );
 };
 

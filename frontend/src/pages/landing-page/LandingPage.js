@@ -6,12 +6,13 @@ import { useSelector } from "react-redux";
 const LandingPage = ({ history }) => {
   const [isOpen, setIsOpen] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { userInfo, isAuth } = userLogin;
+
   useEffect(() => {
-    if (userInfo) {
+    if (isAuth) {
       history.push("/dashboard");
     }
-  }, [history, userInfo]);
+  }, [history, isAuth]);
 
   return (
     <div>

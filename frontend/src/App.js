@@ -6,16 +6,21 @@ import { loadUser } from "./redux/user/userActions";
 import Header from "./components/header/Header";
 import LandingPage from "./pages/landing-page/LandingPage";
 import Dashboard from "./pages/dashboard/Dashboard";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const App = () => {
   const dispatch = useDispatch();
-  useEffect(() => [dispatch(loadUser())]);
+  useEffect(() => {
+    if (localStorage.token) {
+      dispatch(loadUser());
+    }
+  });
   return (
     <div>
       <Header />
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <Route exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Switch>
     </div>
   );

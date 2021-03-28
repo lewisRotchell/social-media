@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  USER_LOAD_REQUEST,
   USER_LOGIN_REQUEST,
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
@@ -11,6 +12,10 @@ import {
 export const loadUser = () => async (dispatch) => {
   const token = JSON.parse(localStorage.getItem("token"));
   try {
+    dispatch({
+      type: USER_LOAD_REQUEST,
+    });
+
     const config = {
       headers: {
         Authorization: "Bearer " + token,
@@ -21,7 +26,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: USER_LOADED,
-      payload: data,
+      payload: data.user,
     });
   } catch (error) {
     dispatch({
@@ -57,7 +62,6 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     localStorage.setItem("token", JSON.stringify(data.token));
-    dispatch(loadUser());
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
