@@ -1,6 +1,6 @@
 export const loadUserState = () => {
   try {
-    const serializedState = localStorage.getItem("userInfo");
+    const serializedState = localStorage.getItem("token");
     if (serializedState === null) {
       return undefined;
     }

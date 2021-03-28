@@ -4,7 +4,35 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_LOADED,
+  USER_LOADED_FAIL,
 } from "./userTypes";
+
+export const loadUser = () => async (dispatch) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get("/api/auth/profile", config);
+    console.log(data);
+
+    dispatch({
+      type: USER_LOADED,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_LOADED_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -25,10 +53,11 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: data,
+      payload: data.token,
     });
 
-    localStorage.setItem("userInfo", JSON.stringify(data.token));
+    localStorage.setItem("token", JSON.stringify(data.token));
+    dispatch(loadUser());
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -41,6 +70,6 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem("userInfo");
+  localStorage.removeItem("token");
   dispatch({ type: USER_LOGOUT });
 };
