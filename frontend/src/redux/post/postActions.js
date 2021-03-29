@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_POSTS, GET_POSTS_FAIL, CLEAR_POSTS } from "./PostTypes";
+import {
+  GET_POSTS,
+  GET_POSTS_FAIL,
+  CLEAR_POSTS,
+  GET_POSTS_REQUEST,
+} from "./PostTypes";
 import setAuthToken from "../../utils/setAuthToken";
 
 export const getPosts = () => async (dispatch) => {
@@ -7,6 +12,10 @@ export const getPosts = () => async (dispatch) => {
     // if (localStorage.token) {
     //   setAuthToken(localStorage.token);
     // }
+
+    dispatch({
+      type: GET_POSTS_REQUEST,
+    });
     const { data } = await axios.get("/api/post/newsfeed");
 
     dispatch({

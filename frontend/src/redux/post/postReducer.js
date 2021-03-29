@@ -1,4 +1,9 @@
-import { GET_POSTS, GET_POSTS_FAIL, CLEAR_POSTS } from "./PostTypes";
+import {
+  GET_POSTS,
+  GET_POSTS_FAIL,
+  GET_POSTS_REQUEST,
+  CLEAR_POSTS,
+} from "./PostTypes";
 
 const initialState = {
   loading: true,
@@ -9,6 +14,11 @@ const initialState = {
 export const postReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case GET_POSTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
     case GET_POSTS:
       return {
         ...state,

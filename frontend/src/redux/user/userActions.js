@@ -1,5 +1,6 @@
 import axios from "axios";
 import setAuthToken from "../../utils/setAuthToken";
+import { getPosts } from "../post/postActions";
 import {
   USER_LOAD_REQUEST,
   USER_LOGIN_REQUEST,
@@ -23,7 +24,6 @@ export const loadUser = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get("/api/auth/profile", config);
-    console.log(data);
 
     dispatch({
       type: USER_LOADED,
@@ -66,6 +66,7 @@ export const login = (email, password) => async (dispatch) => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
+    dispatch(getPosts());
 
     dispatch(loadUser());
   } catch (error) {

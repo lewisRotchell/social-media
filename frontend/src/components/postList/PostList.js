@@ -10,13 +10,13 @@ const PostList = () => {
   console.log(loading);
 
   useEffect(() => {
-    dispatch(getPosts());
+    if (!posts) {
+      dispatch(getPosts());
+    }
   }, [dispatch]);
 
   return loading ? (
     ""
-  ) : !posts ? (
-    "no"
   ) : (
     <div>
       {posts.map((post) => (
