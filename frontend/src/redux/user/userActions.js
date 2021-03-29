@@ -1,4 +1,5 @@
 import axios from "axios";
+import setAuthToken from "../../utils/setAuthToken";
 import {
   USER_LOAD_REQUEST,
   USER_LOGIN_REQUEST,
@@ -62,6 +63,9 @@ export const login = (email, password) => async (dispatch) => {
     });
 
     localStorage.setItem("token", JSON.stringify(data.token));
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
 
     dispatch(loadUser());
   } catch (error) {
@@ -77,5 +81,6 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
+  delete axios.defaults.headers.common["Authorization"];
   dispatch({ type: USER_LOGOUT });
 };

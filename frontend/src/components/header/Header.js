@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/user/userActions";
+import { clearPosts } from "../../redux/post/postActions";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -24,6 +25,7 @@ const Header = () => {
   const { userInfo } = userLogin;
 
   const handleLogout = () => {
+    dispatch(clearPosts());
     dispatch(logout());
   };
   return (

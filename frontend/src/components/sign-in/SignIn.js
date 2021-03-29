@@ -9,6 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/user/userActions";
+import { getPosts } from "../../redux/post/postActions";
+import setAuthToken from "../../utils/setAuthToken";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +41,7 @@ const SignIn = ({ open, onOpen, history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
+    dispatch(getPosts());
   };
 
   return (

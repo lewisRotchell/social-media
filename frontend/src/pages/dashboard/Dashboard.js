@@ -14,6 +14,7 @@ import { loadUser } from "../../redux/user/userActions";
 import { BeatLoader } from "react-spinners";
 import { css } from "@emotion/core";
 import Post from "../../components/post/Post";
+import PostList from "../../components/postList/PostList";
 
 const loaderCSS = css`
   position: absolute;
@@ -94,7 +95,7 @@ const Dashboard = () => {
               </CardActions>
             </form>
           </Card>
-          <Post />
+          <PostList />
         </Container>
       )}
     </>

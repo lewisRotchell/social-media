@@ -43,8 +43,14 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "0",
   },
 }));
-const Post = () => {
+const Post = ({ post }) => {
   const classes = useStyles();
+  const {
+    likes,
+    text,
+    createdAt,
+    user: { photo, _id, username },
+  } = post;
 
   return (
     <Card className={classes.root}>
@@ -52,11 +58,11 @@ const Post = () => {
         className={classes.cardHeader}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {photo}
           </Avatar>
         }
-        title="Name"
-        subheader="September 14, 2016"
+        title={username}
+        subheader={createdAt}
       />
       {/* <CardMedia
         className={classes.media}
@@ -65,9 +71,7 @@ const Post = () => {
       /> */}
       <CardContent className={classes.CardContent}>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -75,7 +79,8 @@ const Post = () => {
           className={classes.likeButton}
           aria-label="add to favorites"
         >
-          <FavoriteIcon /> <span className={classes.numLikes}>1</span>
+          <FavoriteIcon />{" "}
+          <span className={classes.numLikes}>{likes.length}</span>
         </IconButton>
         <IconButton aria-label="share">{/* <ShareIcon /> */}</IconButton>
       </CardActions>
