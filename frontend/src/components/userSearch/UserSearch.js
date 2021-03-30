@@ -1,14 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../redux/user/userActions";
-import { clearPosts } from "../../redux/post/postActions";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles, fade } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import UserSearch from "../userSearch/UserSearch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,42 +58,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const UserSearch = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const handleLogout = () => {
-    dispatch(clearPosts());
-    dispatch(logout());
-  };
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Social Media
-          </Typography>
-          <UserSearch />
-
-          {userInfo ? (
-            <Button
-              className={classes.navButton}
-              onClick={handleLogout}
-              color="inherit"
-            >
-              Logout
-            </Button>
-          ) : (
-            <Link className={classes.navButton} to="/">
-              <Button color="inherit">Log in</Button>
-            </Link>
-          )}
-        </Toolbar>
-      </AppBar>
+    <div className={classes.search}>
+      <div className={classes.searchIcon}>
+        <SearchIcon />
+      </div>
+      <InputBase
+        placeholder="Search…"
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput,
+        }}
+        inputProps={{ "aria-label": "search" }}
+      />
     </div>
   );
 };
 
-export default Header;
+export default UserSearch;
