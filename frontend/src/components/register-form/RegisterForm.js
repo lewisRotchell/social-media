@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/user/userActions";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -33,10 +35,25 @@ const useStyles = makeStyles((theme) => ({
 
 const RegisterForm = React.forwardRef((props, ref) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const { username, email, password } = formData;
+
+  console.log(formData);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
+    dispatch(register(formData));
   };
   return (
     <Container
@@ -63,6 +80,7 @@ const RegisterForm = React.forwardRef((props, ref) => {
             label="Username"
             name="username"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -73,6 +91,7 @@ const RegisterForm = React.forwardRef((props, ref) => {
             label="Email Address"
             name="email"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -83,6 +102,7 @@ const RegisterForm = React.forwardRef((props, ref) => {
             label="Password"
             type="password"
             id="password"
+            onChange={handleChange}
           />
 
           <Button

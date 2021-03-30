@@ -9,6 +9,8 @@ import {
   USER_LOGOUT,
   USER_LOADED,
   USER_LOADED_FAIL,
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
 } from "./userTypes";
 
 export const loadUser = () => async (dispatch) => {
@@ -72,6 +74,41 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const register = ({ username, email, password }) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ username, email, password });
+
+  try {
+    const { data } = await axios.post("/api/auth/register", body, config);
+
+    dispatch({
+      type: USER_REGISTER_SUCCESS,
+      payload: data.token,
+    });
+
+    localStorage.setItem("token", JSON.stringify(data.token));
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    // dispatch(getPosts());
+
+    dispatch(loadUser());
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -6,8 +6,6 @@ import { getPosts } from "../../redux/post/postActions";
 const PostList = () => {
   const dispatch = useDispatch();
   const { posts, loading } = useSelector((state) => state.post);
-  console.log(posts);
-  console.log(loading);
 
   useEffect(() => {
     if (!posts) {

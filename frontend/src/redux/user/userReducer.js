@@ -1,4 +1,6 @@
 import {
+  USER_REGISTER_SUCCESS,
+  USER_REGISTER_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
@@ -19,6 +21,13 @@ const initialState = {
 export const userLoginReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case USER_REGISTER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        token: payload,
+        isAuth: true,
+      };
     case USER_LOGIN_REQUEST:
       return {
         ...state,
@@ -45,6 +54,7 @@ export const userLoginReducer = (state = initialState, action) => {
       };
     case USER_LOGIN_FAIL:
     case USER_LOADED_FAIL:
+    case USER_REGISTER_FAIL:
       return {
         ...state,
         loading: false,
