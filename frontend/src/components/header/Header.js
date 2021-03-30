@@ -86,13 +86,11 @@ const Header = () => {
           <UserSearch />
 
           {userInfo ? (
-            <Button
-              className={classes.navButton}
-              onClick={handleLogout}
-              color="inherit"
-            >
-              Logout
-            </Button>
+            <Link className={classes.navButton} to="/">
+              <Button onClick={handleLogout} color="inherit">
+                Logout
+              </Button>
+            </Link>
           ) : (
             <Link className={classes.navButton} to="/">
               <Button color="inherit">Log in</Button>
