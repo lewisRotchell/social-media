@@ -19,12 +19,10 @@ const getUserByUsername = catchAsync(async (req, res, next) => {
   const { username } = req.body;
   const user = await User.find({
     //finds the username if one letter is typed in
-    username: { $regex: `${username}`, $options: "i" },
+    username: { $regex: `^${username}`, $options: "i" },
   });
 
-  console.log(user.length);
-
-  if (user.length === 0) {
+  if (!user) {
     return next(new AppError("No user found", 400));
   }
 
