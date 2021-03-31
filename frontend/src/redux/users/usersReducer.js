@@ -2,6 +2,7 @@ import {
   USERS_SEARCH_REQUEST,
   USERS_SEARCH_SUCCESS,
   USERS_SEARCH_FAIL,
+  USERS_SEARCH_CLEAR,
 } from "./usersTypes";
 
 const initialState = {
@@ -15,19 +16,20 @@ export const usersReducer = (state = initialState, action) => {
   switch (type) {
     case USERS_SEARCH_REQUEST:
       return {
-        users: payload,
+        userList: [],
         loading: false,
         user: false,
       };
     case USERS_SEARCH_SUCCESS:
       return {
-        users: payload,
+        userList: payload,
         loading: false,
         user: false,
       };
     case USERS_SEARCH_FAIL:
+    case USERS_SEARCH_CLEAR:
       return {
-        users: [],
+        UserList: [],
         loading: false,
         user: false,
       };

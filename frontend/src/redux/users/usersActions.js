@@ -3,10 +3,12 @@ import {
   USERS_SEARCH_REQUEST,
   USERS_SEARCH_SUCCESS,
   USERS_SEARCH_FAIL,
+  USERS_SEARCH_CLEAR,
 } from "./usersTypes";
 
 export const getUsers = (username) => async (dispatch) => {
   try {
+    if (username === "") return;
     dispatch({
       type: USERS_SEARCH_REQUEST,
     });
@@ -16,7 +18,6 @@ export const getUsers = (username) => async (dispatch) => {
         "Content-type": "application/json",
       },
     };
-    console.log(username);
 
     const { data } = await axios.post(
       `/api/users/get-users`,
@@ -39,4 +40,10 @@ export const getUsers = (username) => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+export const clearUsers = () => async (dispatch) => {
+  dispatch({
+    type: USERS_SEARCH_CLEAR,
+  });
 };

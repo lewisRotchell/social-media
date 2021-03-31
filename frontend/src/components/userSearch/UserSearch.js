@@ -1,8 +1,11 @@
+import { useState } from "react";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles, fade } from "@material-ui/core/styles";
-import { getUsers } from "../../redux/users/usersActions";
+
+import { clearUsers, getUsers } from "../../redux/users/usersActions";
 import { useSelector, useDispatch } from "react-redux";
+import { debounce } from "../../utils/debounce";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,27 +67,34 @@ const UserSearch = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
-  const { userList, loading } = users;
 
-  const handleOnChange = (e) => {
-    dispatch(getUsers(e.target.value));
+  const [text, setText] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
   };
 
+  console.log(text);
+
   return (
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <SearchIcon />
+    <form onSubmit={handleSubmit}>
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          // onChange={debounce(handleOnChange, 500)}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Search…"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ "aria-label": "search" }}
+        />
       </div>
-      <InputBase
-        onChange={handleOnChange}
-        placeholder="Search…"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        inputProps={{ "aria-label": "search" }}
-      />
-    </div>
+    </form>
   );
 };
 
