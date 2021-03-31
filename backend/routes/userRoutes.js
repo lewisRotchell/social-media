@@ -9,7 +9,7 @@ import { protect } from "../middleware/auth.js";
 const router = express.Router();
 
 router.route("/").get(getUsers);
-router.route("/:username").get(getUserByUsername);
+router.route("/get-users").post(getUserByUsername);
 router.route("/follow/:id").patch(protect, followAndUnfollowUser);
 
 export default router;

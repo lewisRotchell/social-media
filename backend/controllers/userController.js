@@ -16,10 +16,13 @@ const getUsers = catchAsync(async (req, res, next) => {
 });
 
 const getUserByUsername = catchAsync(async (req, res, next) => {
+  const { username } = req.body;
   const user = await User.find({
     //finds the username if one letter is typed in
-    username: { $regex: req.params.username, $options: "i" },
+    username: { $regex: `${username}`, $options: "i" },
   });
+
+  console.log(user.length);
 
   if (user.length === 0) {
     return next(new AppError("No user found", 400));
@@ -27,7 +30,7 @@ const getUserByUsername = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    data: user,
+    users: user,
   });
 });
 

@@ -1,6 +1,8 @@
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { makeStyles, fade } from "@material-ui/core/styles";
+import { getUsers } from "../../redux/users/usersActions";
+import { useSelector, useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,12 +62,21 @@ const useStyles = makeStyles((theme) => ({
 
 const UserSearch = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users);
+  const { userList, loading } = users;
+
+  const handleOnChange = (e) => {
+    dispatch(getUsers(e.target.value));
+  };
+
   return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>
         <SearchIcon />
       </div>
       <InputBase
+        onChange={handleOnChange}
         placeholder="Search…"
         classes={{
           root: classes.inputRoot,
