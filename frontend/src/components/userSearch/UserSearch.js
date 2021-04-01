@@ -5,6 +5,7 @@ import { makeStyles, fade } from "@material-ui/core/styles";
 
 import { clearUsers, getUsers } from "../../redux/users/usersActions";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { debounce } from "../../utils/debounce";
 
 const useStyles = makeStyles((theme) => ({
@@ -66,16 +67,16 @@ const useStyles = makeStyles((theme) => ({
 const UserSearch = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
+  const history = useHistory();
+  const users = useSelector((state) => state.users.userList);
 
   const [text, setText] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submit");
+    dispatch(getUsers(text));
+    history.push("/search-page");
   };
-
-  console.log(text);
 
   return (
     <form onSubmit={handleSubmit}>

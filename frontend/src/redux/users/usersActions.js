@@ -25,8 +25,6 @@ export const getUsers = (username) => async (dispatch) => {
       config
     );
 
-    console.log(data.users);
-
     dispatch({
       type: USERS_SEARCH_SUCCESS,
       payload: data.users,

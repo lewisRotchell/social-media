@@ -8,7 +8,7 @@ import {
 const initialState = {
   userList: [],
   user: false,
-  loading: true,
+  loading: false,
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ export const usersReducer = (state = initialState, action) => {
     case USERS_SEARCH_REQUEST:
       return {
         userList: [],
-        loading: false,
+        loading: true,
         user: false,
       };
     case USERS_SEARCH_SUCCESS:

@@ -9,6 +9,7 @@ import LandingPage from "./pages/landing-page/LandingPage";
 import Dashboard from "./pages/dashboard/Dashboard";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./routes/PrivateRoute";
+import SearchPage from "./pages/search-page/SearchPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const App = () => {
       <Header />
       <Switch>
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/search-page" component={SearchPage} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Switch>
     </div>

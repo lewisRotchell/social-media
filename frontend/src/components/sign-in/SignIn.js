@@ -41,7 +41,6 @@ const SignIn = ({ open, onOpen, history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
-    // dispatch(getPosts());
   };
 
   return (
