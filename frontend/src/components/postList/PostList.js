@@ -6,6 +6,7 @@ import { getPosts } from "../../redux/post/postActions";
 const PostList = () => {
   const dispatch = useDispatch();
   const { posts, loading } = useSelector((state) => state.post);
+  // const {} = useSelector((state) => state.)
 
   console.log(posts);
 

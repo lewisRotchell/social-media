@@ -17,7 +17,9 @@ const createPost = catchAsync(async (req, res, next) => {
     text: req.body.text,
   });
 
-  post = await post.populate("user").execPopulate();
+  post = await post
+    .populate({ path: "user", select: { _id: 1, username: 1, photo: 1 } })
+    .execPopulate();
 
   res.status(200).json({
     status: "success",
