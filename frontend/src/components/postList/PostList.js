@@ -7,8 +7,10 @@ const PostList = () => {
   const dispatch = useDispatch();
   const { posts, loading } = useSelector((state) => state.post);
 
+  console.log(posts);
+
   useEffect(() => {
-    if (!posts) {
+    if (posts.length === 0) {
       dispatch(getPosts());
     }
   }, [dispatch]);

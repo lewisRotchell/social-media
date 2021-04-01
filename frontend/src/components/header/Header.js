@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { logout } from "../../redux/user/userActions";
 import { clearPosts } from "../../redux/post/postActions";
 import { makeStyles, fade } from "@material-ui/core/styles";
@@ -19,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
     paddingRight: "5px",
     marginRight: theme.spacing(0),
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   search: {
     position: "relative",
@@ -71,16 +75,29 @@ const Header = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const history = useHistory();
 
   const handleLogout = () => {
     dispatch(clearPosts());
     dispatch(logout());
   };
+
+  const handleReturn = () => {
+    if (userInfo === null) {
+      history.push("/");
+    } else {
+      history.push("/dashboard");
+    }
+  };
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography
+            onClick={handleReturn}
+            variant="h6"
+            className={classes.title}
+          >
             Social Media
           </Typography>
           <UserSearch />

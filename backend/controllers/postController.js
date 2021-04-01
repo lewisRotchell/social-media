@@ -5,12 +5,20 @@ import AppError from "../utils/AppError.js";
 const createPost = catchAsync(async (req, res, next) => {
   const user = req.user;
 
-  const newPost = new Post({
+  // let newPost = new Post({
+  //   user: req.user._id,
+  //   text: req.body.text,
+  // });
+
+  // const post = await newPost.save();
+
+  let post = await Post.create({
     user: req.user._id,
     text: req.body.text,
   });
 
-  const post = await newPost.save();
+  post = await post.populate("user").execPopulate();
+
   res.status(200).json({
     status: "success",
     post,

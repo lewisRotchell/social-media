@@ -76,6 +76,7 @@ const UserSearch = () => {
     e.preventDefault();
     dispatch(getUsers(text));
     history.push("/search-page");
+    setText("");
   };
 
   return (
@@ -86,6 +87,7 @@ const UserSearch = () => {
         </div>
         <InputBase
           // onChange={debounce(handleOnChange, 500)}
+          value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Search…"
           classes={{
