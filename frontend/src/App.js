@@ -10,6 +10,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./routes/PrivateRoute";
 import SearchPage from "./pages/search-page/SearchPage";
+import Container from "@material-ui/core/Container";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,14 +25,16 @@ const App = () => {
     }
   });
   return (
-    <div>
+    <>
       <Header />
-      <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/search-page" component={SearchPage} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
-      </Switch>
-    </div>
+      <Container maxWidth="sm">
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/search-page" component={SearchPage} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        </Switch>
+      </Container>
+    </>
   );
 };
 

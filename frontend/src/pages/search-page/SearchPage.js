@@ -1,28 +1,62 @@
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
+import SearchResults from "../../components/search-results/SearchResults";
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: "16px",
+  },
+  button: {
+    display: "block",
+    fontSize: "16px",
+    margin: "auto",
+  },
+  searchMsg: {
+    textAlign: "center",
+    marginTop: "32px",
+  },
+});
 
 const SearchPage = () => {
+  const classes = useStyles();
   const users = useSelector((state) => state.users.userList);
   const loading = useSelector((state) => state.users.loading);
-  console.log(users);
-  //   const [message, setMessage] = useState(false);
+  const userInfo = useSelector((state) => state.userLogin.userInfo);
+  const history = useHistory();
 
-  //   useEffect(() => {
-  //     if (users.length === 5) {
-  //       setMessage(true);
-  //     }
-  //   });
+  const handleReturn = () => {
+    if (userInfo === null) {
+      history.push("/");
+    } else {
+      history.push("/dashboard");
+    }
+  };
 
   return (
-    <div>
-      <h1>SearchPage</h1>
+    <div className={classes.root}>
+      <Button onClick={handleReturn} className={classes.button} color="primary">
+        Go Back
+      </Button>
 
       {loading ? (
         <p>loading</p>
       ) : !loading && users.length > 0 ? (
-        users.map((user) => <p>{user.username}</p>)
+        users.map((user) => (
+          <SearchResults
+            key={user._id}
+            username={user.username}
+            photo={user.photo}
+            id={user._id}
+          />
+        ))
       ) : (
-        <h1>no Users</h1>
+        <Typography className={classes.searchMsg} color="primary" variant="h4">
+          No Search Results
+        </Typography>
       )}
     </div>
   );
