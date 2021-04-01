@@ -8,6 +8,7 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
   likeButton: {
     padding: "0 16px 0 8px",
   },
+  deleteButton: {
+    marginLeft: "auto",
+  },
   cardHeader: {
     paddingBottom: "0",
   },
@@ -36,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "0",
   },
 }));
-const Post = ({ post }) => {
+const Post = ({ post, userId }) => {
   const classes = useStyles();
   const {
     likes,
@@ -44,6 +48,10 @@ const Post = ({ post }) => {
     createdAt,
     user: { photo, _id, username },
   } = post;
+
+  const handleDelete = () => {
+    console.log("deleted");
+  };
 
   return (
     <Card className={classes.root}>
@@ -77,6 +85,16 @@ const Post = ({ post }) => {
           <FavoriteIcon />{" "}
           <span className={classes.numLikes}>{likes.length}</span>
         </IconButton>
+        {userId === _id && (
+          <IconButton
+            onClick={handleDelete}
+            className={classes.deleteButton}
+            aria-label="delete"
+          >
+            <DeleteIcon />{" "}
+          </IconButton>
+        )}
+
         <IconButton aria-label="share">{/* <ShareIcon /> */}</IconButton>
       </CardActions>
     </Card>

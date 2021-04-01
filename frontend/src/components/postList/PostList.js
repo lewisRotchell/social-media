@@ -6,9 +6,7 @@ import { getPosts } from "../../redux/post/postActions";
 const PostList = () => {
   const dispatch = useDispatch();
   const { posts, loading } = useSelector((state) => state.post);
-  // const {} = useSelector((state) => state.)
-
-  console.log(posts);
+  const { _id } = useSelector((state) => state.userLogin.userInfo);
 
   useEffect(() => {
     if (posts.length === 0) {
@@ -21,7 +19,7 @@ const PostList = () => {
   ) : (
     <div>
       {posts.map((post) => (
-        <Post key={post._id} post={post} />
+        <Post key={post._id} post={post} userId={_id} />
       ))}
     </div>
   );
